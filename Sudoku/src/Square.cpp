@@ -1,12 +1,15 @@
 #include "Square.hpp"
 
+
+using namespace std;
+
 Square::Square()
 {
-    across = 0;
-    down = 0;
-    region = 0;
-    value = 0;
-    index = 0;
+    across = 3;
+    down = 3;
+    region = 3;
+    value = 3;
+    index = 3;
 }
 
 Square::~Square()
@@ -14,23 +17,23 @@ Square::~Square()
     //dtor
 }
 
-int Square::getAcross(){
+int Square::getAcross()const{
  return this->across;
 }
 
-int Square::getDown(){
+int Square::getDown()const{
  return this->down;
 }
 
-int Square::getRegion(){
+int Square::getRegion()const{
  return this->region;
 }
 
-int Square::getValue(){
+int Square::getValue()const{
  return this->value;
 }
 
-int Square::getIndex(){
+int Square::getIndex()const{
  return this->index;
 }
 
@@ -53,3 +56,9 @@ void Square::setValue(int val){
 void Square::setIndex(int ind){
  this->index=ind;
 }
+
+
+ostream& operator<< (ostream& unFlux, const Square& unCarre)
+		{
+		    return unFlux << unCarre.getValue();
+		}

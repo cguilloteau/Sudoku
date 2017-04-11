@@ -5,11 +5,11 @@ using namespace std;
 
 Square::Square()
 {
-    across = 3;
-    down = 3;
-    region = 3;
-    value = 3;
-    index = 3;
+    across = 0;
+    down = 0;
+    region = 0;
+    value = 0;
+    index = 0;
 }
 
 Square::~Square()

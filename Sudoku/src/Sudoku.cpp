@@ -64,7 +64,7 @@ int GetRegionFromNumber(int n){
     return k;
 }
 
-*/
+
 bool Conflicts(vector<Square>* CurrentValues, Square test)  {
 	bool retour = false;
     for(vector<Square>::iterator s = CurrentValues->begin(); s != CurrentValues->end();s++){
@@ -75,7 +75,7 @@ bool Conflicts(vector<Square>* CurrentValues, Square test)  {
         }
     }
     return retour;
-}
+}*/
 
 
 /*
@@ -147,39 +147,46 @@ Square Item(int n,int v){
     /*for(vector<Square>::iterator s = Sudoku.begin(); s != Sudoku.end();s++){
         std::cout << s->value << ' ';
 
+*/
 
 
-
-int main(){
+/*int main(){
    int c = 0;
    int i;
-   int z;
-   vector<Square> Sudoku;
-   vector<Square> squares;
+   Square *squares[3];
+   for(int i=0; i<3;i++){
+           squares[i]=(new Square());
+
+       }
    Square carre;
    carre.setValue(5);
    Square autreCarre;
    autreCarre.setValue(7);
    Square carreInit;
-   squares.push_back(carre);
-   squares.push_back(autreCarre);
-   squares.push_back(carreInit);
+   squares[0]= &carre;
+   squares[1]= &autreCarre;
+   squares[2]= &carreInit;
    int available[80][9];
-  /* std::vector<Square>::iterator it;
-   it = squares.begin();
-   int val = it->getValue();
    for (int x=0; x < 80; x++){
-        for (int l=0; l < 9; l++){
-            available[x][l] = l+1;
-            std::cout << available[x][l] << ' ';
-        }
-   }*
-    std::cout << "val fixe" << carre.getValue() << ' ';
-    std::cout << "val test" << val << ' ';
-    for(vector<Square>::iterator s = squares.begin(); s != squares.end();s++){
-        std::cout << ((s)->getValue()) << ' ';
+           for (int l=0; l < 9; l++){
+               available[x][l] = l+1;
+              // std::cout << available[x][l] << ' ';
+           }
+   }
+   int z = 0;
+   while(z==0){
+                   srand(time(NULL));
+                   i = rand()%8;
+                   z = available[c][i];
+                   std::cout << "nombre tiré au sort  " << i << " donc " << z << ' ' << endl;
+           }
 
-}
+
+
+    /*for(int i=0; i<3;i++){
+        std::cout << squares[i]->getValue() << ' ' << endl ;
+
+    }
 }*/
 
 
@@ -202,14 +209,14 @@ int GetAcrossFromNumber(int n){
 }
 
 int GetDownFromNumber(int n) {
-    int k;
+    int l;
     if (GetAcrossFromNumber(n)== 3) {
-        k = n/3 ;
+        l = n/3 ;
     }
     else{
-        k = (n/3) + 1;
+        l = (n/3) + 1;
     }
-    return k;
+    return l;
 }
 
 int GetRegionFromNumber(int n){
@@ -248,11 +255,11 @@ int GetRegionFromNumber(int n){
 }
 
 
-/*bool Conflicts(Square CurrentValues[9], Square test)  {
+bool Conflicts(Square *CurrentValues[9], Square test)  {
 	bool retour=false;
     for(int j = 0; j<9;j++){
-       if (((CurrentValues[j].getAcross() != 0) && (CurrentValues[j].getAcross() == test.getAcross())) || ((CurrentValues[j].getDown() != 0) && (CurrentValues[j].getDown() == test.getDown())) ||((CurrentValues[j].getRegion() != 0) && (CurrentValues[j].getRegion() == test.getRegion()))){
-            if (CurrentValues[j].getValue() == test.getValue()){
+       if (((CurrentValues[j]->getAcross() != 0) && (CurrentValues[j]->getAcross() == test.getAcross())) || ((CurrentValues[j]->getDown() != 0) && (CurrentValues[j]->getDown() == test.getDown())) ||((CurrentValues[j]->getRegion() != 0) && (CurrentValues[j]->getRegion() == test.getRegion()))){
+            if (CurrentValues[j]->getValue() == test.getValue()){
 
             retour = true;
             }
@@ -260,7 +267,7 @@ int GetRegionFromNumber(int n){
 
     }
     return retour;
-}*/
+}
 
 Square Item(int n,int v){
     Square item;
@@ -278,17 +285,42 @@ Square Item(int n,int v){
 int main(){
    int c = 0;
    int i;
-   Square carreInit;
    //Square Sudoku[9];
    //Square squares[9];
-   vector<Square>* squares;
-   for (int t=0; t<9;t++){
-	   Square carreInit;
-	   squares->push_back(carreInit);
-   }
+   Square *squares[9];
+   //vector<Square>* squares;
+   Square carre;
+   Square carree;
+   Square carreee;
+   Square carreeee;
+   Square carreeeee;
+   Square carreeeeee;
+   Square carreeeeeee;
+   Square carreeeeeeee;
+   Square carreeeeeeeee;
 
+   squares[0] = &carre;
+   squares[1] = &carree;
+   squares[2] = &carreee;
+   squares[3] = &carreeee;
+   squares[4] = &carreeeee;
+   squares[5] = &carreeeeee;
+   squares[6] = &carreeeeeee;
+   squares[7] = &carreeeeeeee;
+   squares[8] = &carreeeeeeeee;
+
+   //for (int t=0; t<9;t++){
+	   //squares[t] = Square();
+	   /*squares[t]->setAcross(0);
+	   squares[t]->setDown(0);
+	   squares[t]->setRegion(0);
+	   squares[t]->setIndex(0);
+	   squares[t]->setValue(0);*/
+	   //Square carreInit;
+	   //squares->push_back(carreInit);
+   //}
    for(int p=0; p<9;p++){
-          std::cout << squares->at(p) << ' ' << endl;
+          std::cout << squares[p]->getValue() << ' ' << endl;
        }
 
    int available[9][9];
@@ -297,6 +329,7 @@ int main(){
             available[x][l] = l+1;
       }
    }
+
    int leszeros=0;
    int z = 0;
     do{
@@ -314,15 +347,16 @@ int main(){
                 srand(time(NULL));
                 i = rand()%8;
                 z = available[c][i];
-                std::cout << "nombre tiré au sort  " << i << z << ' ' << endl;
+                //std::cout << "nombre tiré au sort  " << i << " donc " << z << ' ' << endl;
             }
             if ((Conflicts(squares,Item(c,z)))==false){
-                squares->push_back(Item(c,z));
-                /*squares[c].setAcross((Item(c,z)).getAcross());
-                squares[c].setDown((Item(c,z)).getDown());
-                squares[c].setRegion((Item(c,z)).getRegion());
-                squares[c].setIndex((Item(c,z)).getIndex());*/
-                //std::cout << "la valeur dans squares " << squares[c] << ' ' << endl;
+                //squares->push_back(Item(c,z));
+                squares[c]->setAcross((Item(c,z)).getAcross());
+                squares[c]->setDown((Item(c,z)).getDown());
+                squares[c]->setRegion((Item(c,z)).getRegion());
+                squares[c]->setIndex((Item(c,z)).getIndex());
+                squares[c]->setValue((Item(c,z)).getValue());
+                std::cout << "la valeur dans squares " << squares[c]->getValue() << ' ' << endl;
                 available[c][i]=0;
                 c+=1;
             }
@@ -337,12 +371,21 @@ int main(){
             c=c-1;
         }
     }while( c<9 );
-   for(int p=0; p<9;p++){
-       // std::cout << squares[p] << ' ' << endl;
-    }
 
-    /*for(vector<Square>::iterator s = Sudoku.begin(); s != Sudoku.end();s++){
-        std::cout << s->value << ' ';*/
+   for(int p=0; p<3;p++){
+       std::cout << squares[p]->getValue() << ' ' ;
+    }
+   std::cout << ' ' << endl;
+   for(int p=3; p<6;p++){
+          std::cout << squares[p]->getValue() << ' ';
+       }
+   std::cout << ' ' << endl;
+   for(int p=6; p<9;p++){
+          std::cout << squares[p]->getValue() << ' ';
+       }
+
+    //for(vector<Square>::iterator s = Sudoku.begin(); s != Sudoku.end();s++){
+     //   std::cout << s->value << ' ';
 
     return (0);
 }

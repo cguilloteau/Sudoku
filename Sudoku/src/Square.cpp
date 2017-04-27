@@ -8,7 +8,7 @@ Square::Square()
     across = 0;
     down = 0;
     region = 0;
-    value = 0;
+    value = 3;
     index = 0;
 }
 

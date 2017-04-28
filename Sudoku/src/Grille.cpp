@@ -24,6 +24,8 @@ Grille::~Grille() {
 	// TODO Auto-generated destructor stub
 }
 
+
+
 void Grille::chgtValeur(int lig, int col, int val){
 	(laGrille[lig][col])->setValeur(val);
 }
@@ -31,7 +33,6 @@ void Grille::chgtValeur(int lig, int col, int val){
 int Grille::obtenirValeur(int lig, int col){
 	return laGrille[lig][col]->getValeur();
 }
-
 
 
 void Grille::afficher(){

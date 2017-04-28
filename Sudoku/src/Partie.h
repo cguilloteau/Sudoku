@@ -19,7 +19,8 @@ public:
 	Partie(string nomJ);
 	virtual ~Partie();
 	void jouer();
-	void test();
+	void permuter();
+	void initialiser();
 private :
 	bool finie;
 	string nomJoueur;

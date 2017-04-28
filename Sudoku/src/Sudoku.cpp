@@ -191,6 +191,7 @@ srand(time(NULL));
 
 
 int main(){
+	srand(time(NULL));
 	std::cout << "WESH WESH BIENVENUE SUR LE SUDOKU DES INTELLOS BG" << std::endl;
 	std::cout << " " << std::endl;
 	std::cout << "CEST QUOI TON BLAZE FRERE?" << std::endl;
@@ -211,6 +212,8 @@ int main(){
 			std::cout << "VASY CA PART, BON CHANCE" << std::endl;
 			std::cout << " " << std::endl;
 			Partie partie(nomJ);
+			partie.initialiser();
+			partie.permuter();
 			partie.jouer();
 			break;
 			}

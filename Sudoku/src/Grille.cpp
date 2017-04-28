@@ -42,7 +42,12 @@ void Grille::afficher(){
 	for (i=0 ; i< 9 ; i++){
 		std::cout << i+1 << " |" ;
 		for (j=0; j<9 ; j++){
-			std::cout << " " <<laGrille[i][j]->getValeur() << " " << "|";
+			if(laGrille[i][j]->getValeur() ==0 ){
+				std::cout << " " <<" " << " " << "|";
+			}
+			else {
+				std::cout << " " <<laGrille[i][j]->getValeur() << " " << "|";
+			}
 		}
 		std::cout << std::endl;
 		std::cout << "  +---+---+---+---+---+---+---+---+---+" << std::endl;

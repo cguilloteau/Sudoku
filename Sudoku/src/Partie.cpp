@@ -28,7 +28,7 @@ Partie::~Partie() {
 
 void Partie::initialiser(){
 int i,j;
-int tab[9][9]={{8, 4, 3, 7, 6, 5, 2, 1, 9},{5, 6, 7, 2, 1, 9, 3, 8, 4},{1, 2, 9, 4, 3, 8, 5, 7, 6},{2, 7, 4, 3, 8, 1, 6, 9, 5},{6, 8, 1, 5, 9, 2, 7, 4, 3},{3, 9, 5, 6, 7, 4, 1, 2, 8},{7, 1, 8, 9, 5, 3, 4, 6, 2},{4, 5, 6, 8, 2, 7, 9, 3, 1},{9, 3, 2, 1, 4, 6, 8, 5, 7}};
+int tab[9][9]={{0, 4, 3, 7, 6, 5, 2, 1, 9},{5, 6, 7, 2, 1, 9, 3, 8, 4},{1, 2, 9, 4, 3, 8, 5, 7, 6},{2, 7, 4, 3, 8, 1, 6, 9, 5},{6, 8, 1, 5, 9, 2, 7, 4, 3},{3, 9, 5, 6, 7, 4, 1, 2, 8},{7, 1, 8, 9, 5, 3, 4, 6, 2},{4, 5, 6, 8, 2, 7, 9, 3, 1},{9, 3, 2, 1, 4, 6, 8, 5, 7}};
 for (i=0;i<9;i++){
 			for (j=0;j<9;j++){
 				grille.chgtValeur(i,j,tab[i][j]);
@@ -54,8 +54,8 @@ void Partie::permuter(){
 	tabregion1.erase(tabregion1.begin()+c11);
 
 	vector<int> tabregion2;
-	for (int x=0; x < 3; x++){
-		tabregion2.push_back(x+3);
+	for (int x=3; x < 6; x++){
+		tabregion2.push_back(x);
 	}
 	c2 = rand()%(tabregion2.size()-1);
 	v2 = tabregion2.at(c2);
@@ -65,7 +65,7 @@ void Partie::permuter(){
 	tabregion2.erase(tabregion2.begin()+c22);
 
 	vector<int> tabregion3;
-	for (int x=0; x < 3; x++){
+	for (int x=6; x < 9; x++){
 		tabregion3.push_back(x);
 	}
 	c3 = rand()%(tabregion3.size()-1);
@@ -74,20 +74,21 @@ void Partie::permuter(){
 	c33 = rand()%(tabregion3.size()-1);
 	v33 = tabregion3.at(c33);
 	tabregion3.erase(tabregion3.begin()+c33);
+
 	for (int t=0;t<9;t++){
-		temp = grille.obtenirValeur(t,c1);
-		grille.chgtValeur(t,c1,grille.obtenirValeur(t,c11));
-		grille.chgtValeur(t,c11,temp);
+		temp = grille.obtenirValeur(t,v1);
+		grille.chgtValeur(t,v1,grille.obtenirValeur(t,v11));
+		grille.chgtValeur(t,v11,temp);
 	}
 	for (int t=0;t<9;t++){
-		temp = grille.obtenirValeur(t,c2);
-		grille.chgtValeur(t,c2,grille.obtenirValeur(t,c22));
-		grille.chgtValeur(t,c22,temp);
+		temp = grille.obtenirValeur(t,v2);
+		grille.chgtValeur(t,v2,grille.obtenirValeur(t,v22));
+		grille.chgtValeur(t,v22,temp);
 	}
 	for (int t=0;t<9;t++){
-		temp = grille.obtenirValeur(t,c3);
-		grille.chgtValeur(t,c3,grille.obtenirValeur(t,c33));
-		grille.chgtValeur(t,c33,temp);
+		temp = grille.obtenirValeur(t,v3);
+		grille.chgtValeur(t,v3,grille.obtenirValeur(t,v33));
+		grille.chgtValeur(t,v33,temp);
 	}
 }
 
@@ -120,17 +121,18 @@ void Partie::jouer(){
 				if((grilleDeBase.obtenirValeur(ligne,colonne))!=0){
 					cout << "Vous ne pouvez pas modifier cette case" << std::endl;
 				}
-			}while(((colonne<1)||(colonne>9))&&((grilleDeBase.obtenirValeur(ligne,colonne))!=0));
+			}while((colonne<1)||(colonne>9)||((grilleDeBase.obtenirValeur(ligne,colonne))!=0));
 
 			do{
 			std::cout << "Quelle valeur souhaitez-vous insérer? " << std::endl;
 			std::cin >> valeur;
 			}while((valeur<1)||(valeur>9));
+
 			choixOk = true;
 		}
 		grille.chgtValeur(ligne-1,colonne-1,valeur);
 		std::cout << "############################################# " << std::endl;
-		//grille.afficher();
+
 
 		nbzeros = 0;           ////La on regarde si toute la grille est pleine pour mettre fin au jeu
 		for (i=0;i<9;i++){

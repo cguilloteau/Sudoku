@@ -13,6 +13,8 @@
 #include <cstdlib>
 #include <ctime>
 #include "Grille.h"
+#include <stddef.h>
+#include "List.h"
 
 Partie::Partie(string nomJ ) {
 	finie = false;
@@ -28,7 +30,10 @@ Partie::~Partie() {
 
 void Partie::initialiser(){
 int i,j;
-int tab[9][9]={{0, 4, 3, 7, 6, 5, 2, 1, 9},{5, 6, 7, 2, 1, 9, 3, 8, 4},{1, 2, 9, 4, 3, 8, 5, 7, 6},{2, 7, 4, 3, 8, 1, 6, 9, 5},{6, 8, 1, 5, 9, 2, 7, 4, 3},{3, 9, 5, 6, 7, 4, 1, 2, 8},{7, 1, 8, 9, 5, 3, 4, 6, 2},{4, 5, 6, 8, 2, 7, 9, 3, 1},{9, 3, 2, 1, 4, 6, 8, 5, 7}};
+//int tab[9][9]={{8, 4, 3, 7, 6, 5, 2, 1, 9},{5, 6, 7, 2, 1, 9, 3, 8, 4},{1, 2, 9, 4, 3, 8, 5, 7, 6},{2, 7, 4, 3, 8, 1, 6, 9, 5},{6, 8, 1, 5, 9, 2, 7, 4, 3},{3, 9, 5, 6, 7, 4, 1, 2, 8},{7, 1, 8, 9, 5, 3, 4, 6, 2},{4, 5, 6, 8, 2, 7, 9, 3, 1},{9, 3, 2, 1, 4, 6, 8, 5, 7}};
+//int tab[9][9]={{0, 4, 0, 0, 0, 5, 0, 0, 0},{0, 0, 0, 2, 1, 9, 3, 8, 4},{0, 0, 9, 0, 3, 8, 0, 7, 6},{0, 7, 0, 3, 0, 1, 0, 0, 0},{6, 0, 1, 0, 0, 0, 0, 0, 0},{0, 0, 0, 0, 7, 4,0, 2, 0},{0, 1,0, 9, 0,0 , 0, 6, 0},{0, 0, 0, 0, 0, 0, 0, 0, 0},{9, 0, 0, 0, 0, 6, 0, 0, 0}};
+int tab[9][9]={{8, 4, 3, 7, 6, 5, 0, 1, 9},{5, 0, 7, 2, 1, 9, 3, 8, 4},{1, 2, 9, 4, 3, 8, 5, 7, 6},{2, 7, 4, 3, 8, 1, 6, 9, 5},{6, 8, 1, 5, 9, 2, 7, 4, 3},{3, 9, 5, 6, 7, 4, 1, 2, 8},{7, 1, 8, 9, 5, 3, 4, 6, 2},{4, 5, 6, 8, 2, 7, 9, 3, 1},{9, 3, 2, 1, 4, 6, 8, 5, 7}};
+
 for (i=0;i<9;i++){
 			for (j=0;j<9;j++){
 				grille.chgtValeur(i,j,tab[i][j]);
@@ -92,6 +97,148 @@ void Partie::permuter(){
 	}
 }
 
+bool Partie::ligneOk (int k, int i){
+    for (int j=0; j < 9; j++)
+        if (grille.obtenirValeur(i,j) == k)
+            return false;
+    return true;
+}
+
+bool Partie::colonneOk (int k, int j){
+    for (int i=0; i < 9; i++)
+        if (grille.obtenirValeur(i,j) == k)
+            return false;
+    return true;
+}
+
+bool Partie::regionOk (int k, int i, int j)
+{
+    int iR = i-(i%3);  //valeur de la ligne la plus haute de la region de la case
+    int jR = j-(j%3);  //valeur de la colonne la plus à gauche de la region de la case
+    for (i=iR; i < iR+3; i++)
+        for (j=jR; j < jR+3; j++)  //parcours de la region en partant de la case en haut a gauche
+            if (grille.obtenirValeur(i,j) == k)
+                return false;
+    return true;
+}
+
+
+bool Partie::estValide (Grille lagrille, LIST* position){
+    // Si la liste est vide (fin de liste)
+    if (position == NULL)
+        return true;
+
+    int i = position->i, j = position->j;
+
+    for (int k=1; k <= 9; k++)
+    {
+        if ( ligneOk(k,i) && colonneOk(k,j) && regionOk(k,i,j) )
+        {
+            lagrille.chgtValeur(i,j,k);
+
+            if ( estValide(lagrille,position->next) )
+                return true;
+        }
+    }
+    lagrille.chgtValeur(i,j,0);
+
+    return false;
+}
+
+bool Partie::estValide2 (Grille lagrille, LIST* position){
+    // Si la liste est vide (fin de liste)
+    if (position == NULL)
+        return true;
+
+    int i = position->i, j = position->j;
+
+    for (int k=9; k >=1; k--)
+    {
+        if ( ligneOk(k,i) && colonneOk(k,j) && regionOk(k,i,j) )
+        {
+            lagrille.chgtValeur(i,j,k);
+
+            if ( estValide2(lagrille,position->next) )
+                return true;
+        }
+    }
+    lagrille.chgtValeur(i,j,0);
+
+    return false;
+}
+
+
+// Calcule le nombre de valeurs possibles pour une case vide
+int Partie::nb_possibles (int i, int j){
+    int nb_poss = 0;
+    for (int k=0; k < 9; k++)
+        if ( ligneOk(k,i) && colonneOk(k,j) && regionOk(k,i,j) )
+            nb_poss++;
+    return nb_poss;
+}
+
+
+bool Partie::unicite(){
+	bool unique = false;
+	string sol="sol";
+	string sol2="sol2";
+	Partie solution(sol);
+	Partie solution2(sol2);
+    // crée et remplit une liste pour les cases vides à visiter
+    LIST* positions = NULL;
+    for (int i=0; i < 9; i++){
+        for (int j=0; j < 9; j++){
+        	solution.grille.chgtValeur(i,j,grille.obtenirValeur(i,j));
+    		solution2.grille.chgtValeur(i,j,grille.obtenirValeur(i,j));
+            if ( grille.obtenirValeur(i,j) == 0 )
+                liste_cons ( &positions, i, j, nb_possibles(i, j) );
+        }
+	}
+    // Trie la liste (ordre croissant)
+    positions = list_sort (positions);
+
+    // Appelle la fonction de backtracking récursive estValide()
+    bool ret1 = estValide (solution.grille,positions);
+    bool ret2= estValide2(solution2.grille,positions);
+    if((ret1 ==true)&&(ret2==true)){
+    	for (int i=0; i < 9; i++){
+            for (int j=0; j < 9; j++){
+            	if(solution.grille.obtenirValeur(i,j)==solution2.grille.obtenirValeur(i,j))
+            		unique=true;
+            	else
+            		unique=false;
+            }
+    	}
+    }
+    if (unique==true){
+    	bool ret = estValide(grille,positions);
+    }
+    // Détruit la liste
+    liste_delete (&positions);
+    // retourne le resultat
+    return unique;
+}
+
+
+bool Partie::resolution(){
+    // crée et remplit une liste pour les cases vides à visiter
+    LIST* positions = NULL;
+    for (int i=0; i < 9; i++)
+        for (int j=0; j < 9; j++)
+            if ( grille.obtenirValeur(i,j) == 0 )
+                liste_cons ( &positions, i, j, nb_possibles(i, j) );
+
+    // Trie la liste (ordre croissant)
+    positions = list_sort (positions);
+
+    // Appelle la fonction de backtracking récursive estValide()
+    bool ret = estValide (grille,positions);
+    // Détruit la liste
+    liste_delete (&positions);
+    // retourne le resultat
+    return ret;
+}
+
 
 void Partie::jouer(){
 	int ligne, colonne, valeur, i,j, temp, nbzeros;
@@ -118,10 +265,10 @@ void Partie::jouer(){
 			do{
 				std::cout << "Quelle colonne voulez-vous modifier? " << std::endl;
 				std::cin >> colonne;
-				if((grilleDeBase.obtenirValeur(ligne,colonne))!=0){
+				if((grilleDeBase.obtenirValeur(ligne-1,colonne-1))!=0){
 					cout << "Vous ne pouvez pas modifier cette case" << std::endl;
 				}
-			}while((colonne<1)||(colonne>9)||((grilleDeBase.obtenirValeur(ligne,colonne))!=0));
+			}while((colonne<1)||(colonne>9)||((grilleDeBase.obtenirValeur(ligne-1,colonne-1))!=0));
 
 			do{
 			std::cout << "Quelle valeur souhaitez-vous insérer? " << std::endl;
@@ -151,3 +298,4 @@ void Partie::jouer(){
 	std::cout << "Vous avez rempli le sudoku BLA BLA BLA BLA, bravo " << nomJoueur << std::endl;
 
 }
+

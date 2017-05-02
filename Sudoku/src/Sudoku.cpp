@@ -6,7 +6,9 @@
 #include <ctime>
 #include "Partie.h"
 #include "Grille.h"
+#include "List.h"
 using namespace std;
+
 
 
 /*int GetColonneFromNumber(int n){
@@ -18,7 +20,6 @@ using namespace std;
         return k;
     }
 }
-
 int GetLigneFromNumber(int n) {
     int l;
     if (GetColonneFromNumber(n)== 9) {
@@ -29,12 +30,10 @@ int GetLigneFromNumber(int n) {
     }
     return l;
 }
-
 int GetRegionFromNumber(int n){
     int k;
     int a = GetColonneFromNumber(n);
     int d = GetLigneFromNumber(n);
-
     if ((1 <= a) && (a < 4) && (1 <= d) && (d < 4)) {
         k = 1;
     }
@@ -65,21 +64,17 @@ int GetRegionFromNumber(int n){
     return k;
 }
 
-
 bool Conflicts(Case *CurrentValeurs[81], Case test)  {
 	bool retour=false;
     for(int j = 0; j<81;j++){
        if (((CurrentValeurs[j]->getColonne() != 0) && (CurrentValeurs[j]->getColonne() == test.getColonne())) || ((CurrentValeurs[j]->getLigne() != 0) && (CurrentValeurs[j]->getLigne() == test.getLigne())) ||((CurrentValeurs[j]->getRegion() != 0) && (CurrentValeurs[j]->getRegion() == test.getRegion()))){
             if (CurrentValeurs[j]->getValeur() == test.getValeur()){
-
             retour = true;
             }
         }
-
     }
     return retour;
 }
-
 Case Item(int n,int v){
     Case item;
     n+=1;
@@ -90,23 +85,14 @@ Case Item(int n,int v){
     item.setIndex(n - 1);
     return item;
 }
-
-
-
-
 int main(){
-
 srand(time(NULL));
    int c = 0;
    int i,q;
    Case *grille[81];
-
-
    for (int t=0; t<81;t++){
 	   grille[t] = new Case();
-
    }
-
    vector<int> available[81];
    for (int x=0; x < 81; x++){
         for (int l=0; l < 9; l++){
@@ -125,7 +111,6 @@ srand(time(NULL));
         			q= 0;
         			z = available[c].at(0);
         		}
-
             if ((Conflicts(grille,Item(c,z)))==false){
                 grille[c]->setColonne((Item(c,z)).getColonne());
                 grille[c]->setLigne((Item(c,z)).getLigne());
@@ -146,9 +131,7 @@ srand(time(NULL));
         	}
             c=c-1;
         }
-
     }while(c<8);
-
    for(int p=0; p<9;p++){
        std::cout << grille[p]->getValeur() << ' ' ;
     }
@@ -184,10 +167,10 @@ srand(time(NULL));
    for(int p=72; p<81;p++){
                    std::cout << grille[p]->getValeur() << ' ';
                 }
-
-
     return (0);
 }*/
+
+
 
 
 int main(){
@@ -213,8 +196,17 @@ int main(){
 			std::cout << " " << std::endl;
 			Partie partie(nomJ);
 			partie.initialiser();
-			partie.permuter();
-			partie.jouer();
+			bool unik = partie.unicite();
+			if(unik== true)
+			        std::cout << "unik frere" << std::endl;
+			else
+				std::cout << "pas unik frere" << std::endl;
+			//partie.permuter();
+			/*bool test =partie.resolution();
+			if(test== true)
+                std::cout << "résolu" << std::endl;
+
+			partie.jouer();*/
 			break;
 			}
 		case 2:{

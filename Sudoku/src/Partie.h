@@ -7,6 +7,8 @@
 
 #include "Grille.h"
 #include "Case.h"
+#include "List.h"
+
 
 
 using namespace std ;
@@ -21,6 +23,14 @@ public:
 	void jouer();
 	void permuter();
 	void initialiser();
+	bool colonneOk (int k, int j);
+	bool ligneOk (int k, int i);
+	bool regionOk (int k, int i, int j);
+	bool estValide (Grille lagrille, LIST* position);
+	bool estValide2 (Grille lagrille, LIST* position);
+	int nb_possibles (int i, int j);
+	bool resolution();
+	bool unicite();
 private :
 	bool finie;
 	string nomJoueur;

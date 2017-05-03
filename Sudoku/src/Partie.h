@@ -26,11 +26,14 @@ public:
 	bool colonneOk (int k, int j);
 	bool ligneOk (int k, int i);
 	bool regionOk (int k, int i, int j);
+	//bool estValideInitial (Grille lagrille, LIST* position);
 	bool estValide (Grille lagrille, LIST* position);
 	bool estValide2 (Grille lagrille, LIST* position);
 	int nb_possibles (int i, int j);
-	bool resolution();
+	bool resolutionTotale();
+    void resolutionUneCase();
 	bool unicite();
+	void difficulteGrille(int nbCaseEnMoins);
 private :
 	bool finie;
 	string nomJoueur;

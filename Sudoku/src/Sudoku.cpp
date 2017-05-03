@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 #include <stdlib.h>
 #include "Case.h"
 #include <cstdlib>
@@ -63,7 +64,6 @@ int GetRegionFromNumber(int n){
     }
     return k;
 }
-
 bool Conflicts(Case *CurrentValeurs[81], Case test)  {
 	bool retour=false;
     for(int j = 0; j<81;j++){
@@ -182,7 +182,9 @@ int main(){
 	std::cin >> nomJ ;
 
 	int choixMenu = 0;
+	int choixDifficulte = 0;
 	do{
+        std::cout << "" << std::endl;
 		std::cout << "VASY ON FAIT QUOI FRERE?" << std::endl;
 		std::cout << "1- PETITE PARTIE DES FAMILLLES OKLM" << std::endl;
 		std::cout << "2- ON DISCUTE UN COUP OU KOI?" << std::endl;
@@ -191,25 +193,69 @@ int main(){
 
 		switch(choixMenu){
 		case 1:{
-			std::cout << " " << std::endl;
-			std::cout << "VASY CA PART, BON CHANCE" << std::endl;
-			std::cout << " " << std::endl;
-			Partie partie(nomJ);
-			partie.initialiser();
-			bool unik = partie.unicite();
-			if(unik== true)
-			        std::cout << "unik frere" << std::endl;
-			else
-				std::cout << "pas unik frere" << std::endl;
-			//partie.permuter();
-			/*bool test =partie.resolution();
-			if(test== true)
-                std::cout << "résolu" << std::endl;
+		    do{
+                std::cout << "##### Niveau de difficulté #####" << std::endl;
+                std::cout << "1- Facile #boloss" << std::endl;
+                std::cout << "2- Moyen #boloss aussi" << std::endl;
+                std::cout << "3- Difficile #boloss refoulé" << std::endl;
+                std::cout << "4- Diabolique #tu vas perdre" << std::endl;
+                std::cout << "5- Retour au menu #pas de couilles" << std::endl;
+                std::cin >> choixDifficulte;
 
-			partie.jouer();*/
-			break;
-			}
-		case 2:{
+                switch(choixDifficulte){
+                    case 1:{
+                        std::cout << " " << std::endl;
+                        std::cout << "VASY CA PART, BON CHANCE" << std::endl;
+                        std::cout << " " << std::endl;
+                        Partie partie(nomJ);
+                        partie.initialiser();
+                        partie.permuter();
+                        partie.difficulteGrille(45);
+                        partie.jouer();
+                        break;
+                    }
+                    case 2:{
+                        std::cout << " " << std::endl;
+                        std::cout << "VASY CA PART, BON CHANCE" << std::endl;
+                        std::cout << " " << std::endl;
+                        Partie partie(nomJ);
+                        partie.initialiser();
+                        partie.permuter();
+                        partie.difficulteGrille(50);
+                        partie.jouer();
+                        break;
+                    }
+                    case 3:{
+                        std::cout << " " << std::endl;
+                        std::cout << "VASY CA PART, BON CHANCE" << std::endl;
+                        std::cout << " " << std::endl;
+                        Partie partie(nomJ);
+                        partie.initialiser();
+                        partie.permuter();
+                        partie.difficulteGrille(55);
+                        partie.jouer();
+                        break;
+                    }
+                    case 4:{
+                        std::cout << " " << std::endl;
+                        std::cout << "VASY CA PART, BON CHANCE" << std::endl;
+                        std::cout << " " << std::endl;
+                        Partie partie(nomJ);
+                        partie.initialiser();
+                        partie.permuter();
+                        partie.difficulteGrille(60);
+                        partie.jouer();
+                        break;
+                    }
+                    case 5:{
+                        choixMenu=0;
+                        break;
+                    }
+                }
+            }while((choixDifficulte<1)||(choixDifficulte>5));
+            break;
+            }
+        case 2:{
 			//Trouver des trucs à mettre (les règles? ou alors choix niveau difficulté?)  /!\ version assistée et accéléree? (genre une sans question ligne, colonne et valeur)
 			std::cout << "BON CEST QUOI TON TERTER TOI BG?" << std::endl;
 			break;
@@ -220,7 +266,7 @@ int main(){
 			break;
 			}
 		}
-	}while((choixMenu!=3));
+	}while((choixMenu!=3)||(choixMenu==0));
 
 
 	return 0;

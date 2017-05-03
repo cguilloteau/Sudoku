@@ -5,7 +5,17 @@
  *      Author: taljijakli
  */
 
+#include "Partie.h"
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <stdlib.h>
+#include "Case.h"
+#include <cstdlib>
+#include <ctime>
 #include "Grille.h"
+#include <stddef.h>
+#include "List.h"
 
 Grille::Grille() {
 	int i,j ;
@@ -32,6 +42,15 @@ void Grille::chgtValeur(int lig, int col, int val){
 
 int Grille::obtenirValeur(int lig, int col){
 	return laGrille[lig][col]->getValeur();
+}
+
+void Grille::copier(Grille uneGrille){
+	 for (int i=0;i<9;i++){
+		 for (int j=0;j<9;j++){
+			 int val = uneGrille.obtenirValeur(i,j);
+			 laGrille[i][j]->setValeur(val);
+	     }
+	 }
 }
 
 

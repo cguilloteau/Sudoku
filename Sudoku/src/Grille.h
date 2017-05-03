@@ -16,6 +16,7 @@ public:
 	virtual ~Grille();
 	void chgtValeur(const int lig, const int col, const int val);
 	int obtenirValeur(const int lig, const int col);
+	void copier(Grille uneGrille);
 	void afficher();
 
 private:

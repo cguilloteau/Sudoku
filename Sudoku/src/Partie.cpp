@@ -1,5 +1,4 @@
 /*
- /*
  * Partie.cpp
  *
  *  Created on: 27 avr. 2017
@@ -18,10 +17,10 @@
 #include <stddef.h>
 #include "List.h"
 
-Partie::Partie(string nomJ ) {
+Partie::Partie(string nomJ, int laTaille) {
 	finie = false;
 	nomJoueur = nomJ;
-	Grille grille;
+	Grille grille(laTaille);
 
 }
 
@@ -69,84 +68,254 @@ for (i=0;i<9;i++){
 	    	std::cout << "Marche pas" << endl;
 }*/
 
-void Partie::permuter(){
+void Partie::permuterColonnes(){
 	int temp;
-	int c1, v1, c11, v11;
-	int c2, v2, c22, v22;
-	int c3, v3, c33, v33;
-	vector<int> tabregion1;
-	for (int x=0; x < 3; x++){
-		tabregion1.push_back(x);
-	}
-	c1 = rand()%(tabregion1.size()-1);
-	v1 = tabregion1.at(c1);
-	tabregion1.erase(tabregion1.begin()+c1);
-	c11 = rand()%(tabregion1.size()-1);
-	v11 = tabregion1.at(c11);
-	tabregion1.erase(tabregion1.begin()+c11);
+	int c1, c11;
+	int c2, c22;
+	int c3, c33;
+	int c4, c44;
 
-	vector<int> tabregion2;
-	for (int x=3; x < 6; x++){
-		tabregion2.push_back(x);
-	}
-	c2 = rand()%(tabregion2.size()-1);
-	v2 = tabregion2.at(c2);
-	tabregion2.erase(tabregion2.begin()+c2);
-	c22 = rand()%(tabregion2.size()-1);
-	v22 = tabregion2.at(c22);
-	tabregion2.erase(tabregion2.begin()+c22);
+	if(grille.getTaille()==9){
+		vector<int> tabregion1;   //vecteur qui va permettre le tirage au sort entre les 3 premières colonnes (quand  on en tire 1 on le supprime pour le second tirage)
+		for (int x=0; x < 3; x++){
+			tabregion1.push_back(x);
+		}
+		std::random_shuffle (tabregion1.begin(), tabregion1.end() );
+		c1=tabregion1.at(0);
+		c11=tabregion1.at(1);
 
-	vector<int> tabregion3;
-	for (int x=6; x < 9; x++){
-		tabregion3.push_back(x);
-	}
-	c3 = rand()%(tabregion3.size()-1);
-	v3 = tabregion3.at(c3);
-	tabregion3.erase(tabregion3.begin()+c3);
-	c33 = rand()%(tabregion3.size()-1);
-	v33 = tabregion3.at(c33);
-	tabregion3.erase(tabregion3.begin()+c33);
 
-	for (int t=0;t<9;t++){
-		temp = grille.obtenirValeur(t,v1);
-		grille.chgtValeur(t,v1,grille.obtenirValeur(t,v11));
-		grille.chgtValeur(t,v11,temp);
+		vector<int> tabregion2;
+		for (int x=3; x < 6; x++){
+			tabregion2.push_back(x);
+		}
+		std::random_shuffle (tabregion2.begin(), tabregion2.end() );
+		c2=tabregion2.at(0);
+		c22=tabregion2.at(1);
+
+		vector<int> tabregion3;
+		for (int x=6; x < 9; x++){
+			tabregion3.push_back(x);
+		}
+		std::random_shuffle (tabregion3.begin(), tabregion3.end() );
+		c3=tabregion3.at(0);
+		c33=tabregion3.at(1);
+
+
+		for (int t=0;t<grille.getTaille();t++){
+			temp = grille.obtenirValeur(t,c1);
+			grille.chgtValeur(t,c1,grille.obtenirValeur(t,c11));
+			grille.chgtValeur(t,c11,temp);
+		}
+		for (int t=0;t<grille.getTaille();t++){
+			temp = grille.obtenirValeur(t,c2);
+			grille.chgtValeur(t,c2,grille.obtenirValeur(t,c22));
+			grille.chgtValeur(t,c22,temp);
+		}
+		for (int t=0;t<grille.getTaille();t++){
+			temp = grille.obtenirValeur(t,c3);
+			grille.chgtValeur(t,c3,grille.obtenirValeur(t,c33));
+			grille.chgtValeur(t,c33,temp);
+		}
 	}
-	for (int t=0;t<9;t++){
-		temp = grille.obtenirValeur(t,v2);
-		grille.chgtValeur(t,v2,grille.obtenirValeur(t,v22));
-		grille.chgtValeur(t,v22,temp);
+
+	if(grille.getTaille()==16){
+		vector<int> tabregion1;   //vecteur qui va permettre le tirage au sort entre les 4 colonnes de la région 1 (quand  on en tire 1 on le supprime pour le second tirage)
+				for (int x=0; x < 4; x++){
+					tabregion1.push_back(x);
+				}
+				std::random_shuffle (tabregion1.begin(), tabregion1.end() );
+				c1=tabregion1.at(0);
+				c11=tabregion1.at(1);
+
+
+				vector<int> tabregion2;
+				for (int x=4; x < 8; x++){
+					tabregion2.push_back(x);
+				}
+				std::random_shuffle (tabregion2.begin(), tabregion2.end() );
+				c2=tabregion2.at(0);
+				c22=tabregion2.at(1);
+
+				vector<int> tabregion3;
+				for (int x=8; x < 12; x++){
+					tabregion3.push_back(x);
+				}
+				std::random_shuffle (tabregion3.begin(), tabregion3.end() );
+				c3=tabregion3.at(0);
+				c33=tabregion3.at(1);
+
+				vector<int> tabregion4;
+					for (int x=12; x < 16; x++){
+						tabregion4.push_back(x);
+					}
+					std::random_shuffle (tabregion4.begin(), tabregion4.end() );
+					c4=tabregion4.at(0);
+					c44=tabregion4.at(1);
+
+				for (int t=0;t<grille.getTaille();t++){
+					temp = grille.obtenirValeur(t,c1);
+					grille.chgtValeur(t,c1,grille.obtenirValeur(t,c11));
+					grille.chgtValeur(t,c11,temp);
+				}
+				for (int t=0;t<grille.getTaille();t++){
+					temp = grille.obtenirValeur(t,c2);
+					grille.chgtValeur(t,c2,grille.obtenirValeur(t,c22));
+					grille.chgtValeur(t,c22,temp);
+				}
+				for (int t=0;t<grille.getTaille();t++){
+					temp = grille.obtenirValeur(t,c3);
+					grille.chgtValeur(t,c3,grille.obtenirValeur(t,c33));
+					grille.chgtValeur(t,c33,temp);
+				}
+				for (int t=0;t<grille.getTaille();t++){
+					temp = grille.obtenirValeur(t,c4);
+					grille.chgtValeur(t,c4,grille.obtenirValeur(t,c44));
+					grille.chgtValeur(t,c44,temp);
+				}
 	}
-	for (int t=0;t<9;t++){
-		temp = grille.obtenirValeur(t,v3);
-		grille.chgtValeur(t,v3,grille.obtenirValeur(t,v33));
-		grille.chgtValeur(t,v33,temp);
+}
+
+
+void Partie::permuterLignes(){
+	int temp;
+	int l1, l11;
+	int l2, l22;
+	int l3, l33;
+	int l4, l44;
+	if(grille.getTaille()==9){
+		vector<int> tabregion1;   //vecteur qui va permettre le tirage au sort entre les 3 colonnes de la région 1 (quand  on en tire 1 on le supprime pour le second tirage)
+		for (int x=0; x < 3; x++){
+			tabregion1.push_back(x);
+		}
+		std::random_shuffle (tabregion1.begin(), tabregion1.end() );
+		l1=tabregion1.at(0);
+		l11=tabregion1.at(1);
+
+
+		vector<int> tabregion2;
+		for (int x=3; x < 6; x++){
+			tabregion2.push_back(x);
+		}
+		std::random_shuffle (tabregion2.begin(), tabregion2.end() );
+		l2=tabregion2.at(0);
+		l22=tabregion2.at(1);
+
+		vector<int> tabregion3;
+		for (int x=6; x < 9; x++){
+			tabregion3.push_back(x);
+		}
+		std::random_shuffle (tabregion3.begin(), tabregion3.end() );
+		l3=tabregion3.at(0);
+		l33=tabregion3.at(1);
+
+
+		for (int t=0;t<9;t++){
+			temp = grille.obtenirValeur(l1,t);
+			grille.chgtValeur(l1,t,grille.obtenirValeur(l11,t));
+			grille.chgtValeur(l11,t,temp);
+		}
+		for (int t=0;t<9;t++){
+			temp = grille.obtenirValeur(l2,t);
+			grille.chgtValeur(l2,t,grille.obtenirValeur(l22,t));
+			grille.chgtValeur(l22,t,temp);
+		}
+		for (int t=0;t<9;t++){
+			temp = grille.obtenirValeur(l3,t);
+			grille.chgtValeur(l3,t,grille.obtenirValeur(l33,t));
+			grille.chgtValeur(l33,t,temp);
+		}
+	}
+
+	if(grille.getTaille()==16){
+		vector<int> tabregion1;   //vecteur qui va permettre le tirage au sort entre les 4 lignes de la région 1 (quand  on en tire 1 on le supprime pour le second tirage)
+		for (int x=0; x < 4; x++){
+			tabregion1.push_back(x);
+		}
+		std::random_shuffle (tabregion1.begin(), tabregion1.end() );
+		l1=tabregion1.at(0);
+		l11=tabregion1.at(1);
+
+		vector<int> tabregion2;
+		for (int x=4; x < 8; x++){
+			tabregion2.push_back(x);
+		}
+		std::random_shuffle (tabregion2.begin(), tabregion2.end() );
+		l2=tabregion2.at(0);
+		l22=tabregion2.at(1);
+
+		vector<int> tabregion3;
+		for (int x=8; x < 12; x++){
+			tabregion3.push_back(x);
+		}
+		std::random_shuffle (tabregion3.begin(), tabregion3.end() );
+		l3=tabregion3.at(0);
+		l33=tabregion3.at(1);
+
+		vector<int> tabregion4;
+		for (int x=12; x < 16; x++){
+			tabregion4.push_back(x);
+		}
+		std::random_shuffle (tabregion4.begin(), tabregion4.end() );
+		l4=tabregion4.at(0);
+		l44=tabregion4.at(1);
+
+		for (int t=0;t<grille.getTaille();t++){
+			temp = grille.obtenirValeur(l1,t);
+			grille.chgtValeur(l1,t,grille.obtenirValeur(l11,t));
+			grille.chgtValeur(l11,t,temp);
+		}
+		for (int t=0;t<grille.getTaille();t++){
+			temp = grille.obtenirValeur(l2,t);
+			grille.chgtValeur(l2,t,grille.obtenirValeur(l22,t));
+			grille.chgtValeur(l22,t,temp);
+		}
+		for (int t=0;t<grille.getTaille();t++){
+			temp = grille.obtenirValeur(l3,t);
+			grille.chgtValeur(l3,t,grille.obtenirValeur(l33,t));
+			grille.chgtValeur(l33,t,temp);
+		}
+		for (int t=0;t<grille.getTaille();t++){
+			temp = grille.obtenirValeur(l4,t);
+			grille.chgtValeur(l4,t,grille.obtenirValeur(l44,t));
+			grille.chgtValeur(l44,t,temp);
+		}
 	}
 }
 
 bool Partie::ligneOk (int k, int i){
-    for (int j=0; j < 9; j++)
+    for (int j=0; j < grille.getTaille(); j++)
         if (grille.obtenirValeur(i,j) == k)
             return false;
     return true;
 }
 
 bool Partie::colonneOk (int k, int j){
-    for (int i=0; i < 9; i++)
+    for (int i=0; i < grille.getTaille(); i++)
         if (grille.obtenirValeur(i,j) == k)
             return false;
     return true;
 }
 
-bool Partie::regionOk (int k, int i, int j)
-{
-    int iR = i-(i%3);  //valeur de la ligne la plus haute de la region de la case
-    int jR = j-(j%3);  //valeur de la colonne la plus à gauche de la region de la case
-    for (i=iR; i < iR+3; i++)
-        for (j=jR; j < jR+3; j++)  //parcours de la region en partant de la case en haut a gauche
-            if (grille.obtenirValeur(i,j) == k)
-                return false;
-    return true;
+bool Partie::regionOk (int k, int i, int j){
+	bool retour=true;
+	if(grille.getTaille()==9){
+		int iR = i-(i%3);  //valeur de la ligne la plus haute de la region de la case
+		int jR = j-(j%3);  //valeur de la colonne la plus à gauche de la region de la case
+		for (i=iR; i < iR+3; i++)
+			for (j=jR; j < jR+3; j++)  //parcours de la region en partant de la case en haut a gauche
+				if (grille.obtenirValeur(i,j) == k)
+					retour= false;
+	}
+	if(grille.getTaille()==16){
+		int iR = i-(i%4);  //valeur de la ligne la plus haute de la region de la case
+		int jR = j-(j%4);  //valeur de la colonne la plus à gauche de la region de la case
+		for (i=iR; i < iR+4; i++)
+			for (j=jR; j < jR+4; j++)  //parcours de la region en partant de la case en haut a gauche
+				if (grille.obtenirValeur(i,j) == k)
+					retour= false;
+	}
+	return retour;
 }
 
 //C'etait un test pour essayer de remplir la grille en partant de rien avec la nouvelle fonction de backtracking => Marche pas
@@ -184,7 +353,7 @@ bool Partie::estValide (Grille lagrille, LIST* position){
 
     int i = position->i, j = position->j;
 
-    for (int k=1; k <= 9; k++)
+    for (int k=1; k <= grille.getTaille(); k++)
     {
         if ( ligneOk(k,i) && colonneOk(k,j) && regionOk(k,i,j) )
         {
@@ -206,7 +375,7 @@ bool Partie::estValide2 (Grille lagrille, LIST* position){ //permet de résoudre 
 
     int i = position->i, j = position->j;
 
-    for (int k=9; k >=1; k--)
+    for (int k=grille.getTaille(); k >=1; k--)
     {
         if ( ligneOk(k,i) && colonneOk(k,j) && regionOk(k,i,j) )
         {
@@ -225,7 +394,7 @@ bool Partie::estValide2 (Grille lagrille, LIST* position){ //permet de résoudre 
 // Calcule le nombre de valeurs possibles pour une case vide
 int Partie::nb_possibles (int i, int j){
     int nb_poss = 0;
-    for (int k=0; k < 9; k++)
+    for (int k=0; k < grille.getTaille(); k++)
         if ( ligneOk(k,i) && colonneOk(k,j) && regionOk(k,i,j) )
             nb_poss++;
     return nb_poss;
@@ -234,14 +403,12 @@ int Partie::nb_possibles (int i, int j){
 
 bool Partie::unicite(){
 	bool unique = false;
-	string sol="sol";
-	string sol2="sol2";
-	Partie solution(sol);
-	Partie solution2(sol2);
+	Partie solution("sol",grille.getTaille());
+	Partie solution2("sol2",grille.getTaille());
     // crée et remplit une liste pour les cases vides à visiter
     LIST* positions = NULL;
-    for (int i=0; i < 9; i++){
-        for (int j=0; j < 9; j++){
+    for (int i=0; i < grille.getTaille(); i++){
+        for (int j=0; j < grille.getTaille(); j++){
         	solution.grille.chgtValeur(i,j,grille.obtenirValeur(i,j));
     		solution2.grille.chgtValeur(i,j,grille.obtenirValeur(i,j));
             if ( grille.obtenirValeur(i,j) == 0 )
@@ -255,8 +422,8 @@ bool Partie::unicite(){
     bool ret1 = estValide (solution.grille,positions);
     bool ret2= estValide2(solution2.grille,positions);
     if((ret1 ==true)&&(ret2==true)){
-    	for (int i=0; i < 9; i++){
-            for (int j=0; j < 9; j++){
+    	for (int i=0; i < grille.getTaille(); i++){
+            for (int j=0; j < grille.getTaille(); j++){
             	if(solution.grille.obtenirValeur(i,j)==solution2.grille.obtenirValeur(i,j))
             		unique=true;
             	else
@@ -277,17 +444,18 @@ void Partie::difficulteGrille(int nbCaseEnMoins){
     int caseEnleve = 0;  //compteur de case qu'on enleve au fur et a mesure
     int iGrille, jGrille;
     bool uniciteOk= false;
-    string t="t";
-	Partie testVidage(t);
+	Partie testVidage("test",grille.getTaille());
 
     std::vector<int> listeCase;
-    for (int i=0; i<81; ++i) listeCase.push_back(i); // vecteur de 0 à 80 représentant les cases
+    int nbCases = (grille.getTaille()*grille.getTaille());  //nombre de cases = taille * taille
+    for (int i=0; i<nbCases; ++i)
+    	listeCase.push_back(i); // vecteur de 0 à nbCases-1 représentant les cases
     std::random_shuffle ( listeCase.begin(), listeCase.end() ); //melange les cases pour le tirage au sort
 
     for (unsigned x=0; x<listeCase.size(); x++){
         if(caseEnleve<nbCaseEnMoins){
-            iGrille = (listeCase.at(x) / 9);    //on recupere ligne et colonne dans la grille pour la case tirée
-            jGrille = (listeCase.at(x) % 9);
+            iGrille = (listeCase.at(x) / grille.getTaille());    //on recupere ligne et colonne dans la grille pour la case tirée
+            jGrille = (listeCase.at(x) % grille.getTaille());
 
             testVidage.grille.copier(grille);  //on copie la grille du jeu dans la grille de test
             testVidage.grille.chgtValeur(iGrille,jGrille,0);
@@ -303,8 +471,8 @@ void Partie::difficulteGrille(int nbCaseEnMoins){
 bool Partie::resolutionTotale(){
     // crée et remplit une liste pour les cases vides à visiter
     LIST* positions = NULL;
-    for (int i=0; i < 9; i++)
-        for (int j=0; j < 9; j++)
+    for (int i=0; i < grille.getTaille(); i++)
+        for (int j=0; j < grille.getTaille(); j++)
             if ( grille.obtenirValeur(i,j) == 0 )
                 liste_cons ( &positions, i, j, nb_possibles(i, j) );
 
@@ -322,20 +490,21 @@ void Partie::resolutionUneCase(){
     bool sudokuCorrect=false;
     int caseAjoute=0;
     int iGrille,jGrille;
-    Partie partieTemp("temp");
+    Partie partieTemp("temp",grille.getTaille());
 
     partieTemp.grille.copier(grille);   //on copie la grille du jeu dans la grille temporaire
     sudokuCorrect = partieTemp.resolutionTotale();
     if(sudokuCorrect==true){
         std::vector<int> listeCase;
-        for (int i=0; i<81; ++i)
-            listeCase.push_back(i); // vecteur de 0 à 80 représentant les cases
+        int nbCases = grille.getTaille()*grille.getTaille();
+        for (int i=0; i<nbCases; ++i)
+            listeCase.push_back(i); // vecteur de 0 à nbCases-1 représentant les cases
         std::random_shuffle ( listeCase.begin(), listeCase.end() ); //melange les cases pour le tirage au sort
 
         for (unsigned x=0; x<listeCase.size(); x++){
             if(caseAjoute<1){
-                iGrille = (listeCase.at(x) / 9);    //on recupere ligne et colonne dans la grille pour la case tirée
-                jGrille = (listeCase.at(x) % 9);
+                iGrille = (listeCase.at(x) / grille.getTaille());    //on recupere ligne et colonne dans la grille pour la case tirée
+                jGrille = (listeCase.at(x) % grille.getTaille());
                 if((partieTemp.grille.obtenirValeur(iGrille,jGrille)!=grille.obtenirValeur(iGrille,jGrille))){
                     grille.chgtValeur(iGrille,jGrille,partieTemp.grille.obtenirValeur(iGrille,jGrille));
                     caseAjoute=caseAjoute+1;
@@ -350,10 +519,10 @@ void Partie::resolutionUneCase(){
 void Partie::jouer(){
 	int ligne=0, colonne, valeur, i,j, nbzeros, numeroCoup=0;
 	bool choixOk;
-	Grille grilleDeBase;
-	Grille grilleTemp;
-	Grille mesCoups[60]; //tableau de grille qui va recenser les coups joués pour revenir en arrière
-	Partie solutionFinale("solfinale");
+	Grille grilleDeBase(grille.getTaille());
+	Grille grilleTemp(grille.getTaille());
+	Grille mesCoups[120](grille.getTaille()); //tableau de grille qui va recenser les coups joués pour revenir en arrière
+	Partie solutionFinale("solfinale",grille.getTaille());
 	grilleDeBase.copier(grille);
 	solutionFinale.grille.copier(grille);
     solutionFinale.resolutionTotale();     //on a la grille finale correcte
@@ -365,7 +534,7 @@ void Partie::jouer(){
 		choixOk = false;
 		while(choixOk == false){
 			do{
-				std::cout << "Quelle ligne voulez-vous modifier? (0 pour obtenir de l'aide/11 pour revenir en arrière)"<< std::endl;
+				std::cout << "Quelle ligne voulez-vous modifier? (0 pour obtenir de l'aide/21 pour revenir en arrière)"<< std::endl;
 				std::cin >> ligne;
 				if(ligne==0){
 					numeroCoup++;
@@ -373,13 +542,13 @@ void Partie::jouer(){
                     resolutionUneCase();
                     grille.afficher();
 				}
-				if(ligne==11){
+				if(ligne==21){
 
 					grille.copier(mesCoups[numeroCoup]);
 					numeroCoup--;
                     grille.afficher();
 				}
-			}while((ligne<1)||(ligne>9));
+			}while((ligne<1)||(ligne>grille.getTaille()));
 
 			do{
 				std::cout << "Quelle colonne voulez-vous modifier? (0 pour changer de ligne)" << std::endl;
@@ -388,19 +557,19 @@ void Partie::jouer(){
                     do{
                         std::cout << "Quelle ligne voulez-vous modifier? " << std::endl;
                         std::cin >> ligne;
-                        }while((ligne<1)||(ligne>9));
+                        }while((ligne<1)||(ligne>grille.getTaille()));
                     std::cout << "Quelle colonne voulez-vous modifier? " << std::endl;
                     std::cin >> colonne;
 				}
 				if((grilleDeBase.obtenirValeur(ligne-1,colonne-1))!=0){
 					cout << "Vous ne pouvez pas modifier cette case" << std::endl;
 				}
-			}while((colonne<1)||(colonne>9)||((grilleDeBase.obtenirValeur(ligne-1,colonne-1))!=0));  //on vérifie que l'on ne change pas une des valeurs de la grille initiale
+			}while((colonne<1)||(colonne>grille.getTaille())||((grilleDeBase.obtenirValeur(ligne-1,colonne-1))!=0));  //on vérifie que l'on ne change pas une des valeurs de la grille initiale
 
 			do{
 			std::cout << "Quelle valeur souhaitez-vous insérer? " << std::endl;
 			std::cin >> valeur;
-			}while((valeur<1)||(valeur>9));
+			}while((valeur<1)||(valeur>grille.getTaille()));
 
 			choixOk = true;
 		}
@@ -411,8 +580,8 @@ void Partie::jouer(){
         std::cout << "" << std::endl;
 
 		nbzeros = 0;           ////La on regarde si toute la grille est pleine pour mettre fin au jeu
-		for (i=0;i<9;i++){
-			for (j=0;j<9;j++){
+		for (i=0;i<grille.getTaille();i++){
+			for (j=0;j<grille.getTaille();j++){
 				if (grille.obtenirValeur(i,j)==0){
 					nbzeros= nbzeros+1;
 				}
@@ -426,8 +595,8 @@ void Partie::jouer(){
 	std::cout << "####################################################### " << std::endl;
 	std::cout << "Vous avez rempli le sudoku, vérifions qu'il est correct" << std::endl;
 	bool correct=true;
-	for (i=0;i<9;i++){
-        for (j=0;j<9;j++){
+	for (i=0;i<grille.getTaille();i++){
+        for (j=0;j<grille.getTaille();j++){
             if (grille.obtenirValeur(i,j)!=solutionFinale.grille.obtenirValeur(i,j)){
                     correct=false;
             }

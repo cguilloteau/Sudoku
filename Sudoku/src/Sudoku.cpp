@@ -175,10 +175,15 @@ srand(time(NULL));
 
 int main(){
 	srand(time(NULL));
-	std::cout << "WESH WESH BIENVENUE SUR LE SUDOKU DES INTELLOS BG" << std::endl;
+	std::cout <<"_____           _       _"<< std::endl;
+	std::cout <<"/ ____|         | |     | |         "<< std::endl;
+	std::cout <<"| (___  _   _  __| | ___ | | ___   _ "<< std::endl;
+	std::cout <<"\___ \| | | |/ _` |/ _ \| |/ / | | |"<< std::endl;
+	std::cout <<"___) | |_| | (_| | (_) |   <| |_| |"<< std::endl;
+	std::cout <<"|_____/ \__,_|\__,_|\___/|_|\_\\__,_|" << std::endl;;
 	std::cout << " " << std::endl;
 	std::cout << "CEST QUOI TON BLAZE FRERE?" << std::endl;
-	string nomJ;
+	/*string nomJ;
 	std::cin >> nomJ ;
 
 	int choixMenu = 0;
@@ -209,8 +214,9 @@ int main(){
                         std::cout << " " << std::endl;
                         Partie partie(nomJ);
                         partie.initialiser();
-                        partie.permuter();
-                        partie.difficulteGrille(45);
+                        partie.permuterColonnes();
+                        partie.permuterLignes();
+                        //partie.difficulteGrille(45);
                         partie.jouer();
                         break;
                     }
@@ -220,7 +226,8 @@ int main(){
                         std::cout << " " << std::endl;
                         Partie partie(nomJ);
                         partie.initialiser();
-                        partie.permuter();
+                        partie.permuterColonnes();
+                        partie.permuterLignes();
                         partie.difficulteGrille(50);
                         partie.jouer();
                         break;
@@ -231,7 +238,8 @@ int main(){
                         std::cout << " " << std::endl;
                         Partie partie(nomJ);
                         partie.initialiser();
-                        partie.permuter();
+                        partie.permuterColonnes();
+                        partie.permuterLignes();
                         partie.difficulteGrille(55);
                         partie.jouer();
                         break;
@@ -242,7 +250,8 @@ int main(){
                         std::cout << " " << std::endl;
                         Partie partie(nomJ);
                         partie.initialiser();
-                        partie.permuter();
+                        partie.permuterColonnes();
+                        partie.permuterLignes();
                         partie.difficulteGrille(60);
                         partie.jouer();
                         break;
@@ -268,6 +277,6 @@ int main(){
 		}
 	}while((choixMenu!=3)||(choixMenu==0));
 
-
+*/
 	return 0;
 }

@@ -18,10 +18,11 @@ using namespace std ;
 
 class Partie {
 public:
-	Partie(string nomJ);
+	Partie(string nomJ, int laTaille);
 	virtual ~Partie();
 	void jouer();
-	void permuter();
+	void permuterColonnes();
+	void permuterLignes();
 	void initialiser();
 	bool colonneOk (int k, int j);
 	bool ligneOk (int k, int i);

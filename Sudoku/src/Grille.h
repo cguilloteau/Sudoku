@@ -12,8 +12,10 @@
 
 class Grille {
 public:
-	Grille();
+	Grille(int laTaille);
 	virtual ~Grille();
+	int getTaille()const;
+	void setTaille(int uneTaille);
 	void chgtValeur(const int lig, const int col, const int val);
 	int obtenirValeur(const int lig, const int col);
 	void copier(Grille uneGrille);
@@ -21,6 +23,7 @@ public:
 
 private:
     Case *laGrille[9][9];
+    int taille;
 };
 
 #endif /* GRILLE_H_ */

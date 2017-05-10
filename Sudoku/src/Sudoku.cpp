@@ -175,84 +175,112 @@ srand(time(NULL));
 
 int main(){
 	srand(time(NULL));
-	std::cout <<"_____           _       _"<< std::endl;
-	std::cout <<"/ ____|         | |     | |         "<< std::endl;
-	std::cout <<"| (___  _   _  __| | ___ | | ___   _ "<< std::endl;
-	std::cout <<"\___ \| | | |/ _` |/ _ \| |/ / | | |"<< std::endl;
-	std::cout <<"___) | |_| | (_| | (_) |   <| |_| |"<< std::endl;
-	std::cout <<"|_____/ \__,_|\__,_|\___/|_|\_\\__,_|" << std::endl;;
+	std::cout <<"   _____           _       _"<< std::endl;
+	std::cout <<"  / ____|         | |     | |         "<< std::endl;
+	std::cout <<" | (___  _   _  __| | ___ | | ___   _ "<< std::endl;
+	std::cout <<"  \___  \\| | | |/ _` |/ _ \\| |/ / | | |"<< std::endl;
+	std::cout <<"  ___)  | |_| | (_| | (_) |   <| |_| |"<< std::endl;
+	std::cout <<" |_____/ \\__,_|\\__,_|\\___/|_|\\_\\\\__,_|" << std::endl;;
 	std::cout << " " << std::endl;
-	std::cout << "CEST QUOI TON BLAZE FRERE?" << std::endl;
-	/*string nomJ;
+	std::cout << "Bienvenue, quel est ton prénom ?" << std::endl;
+	string nomJ;
 	std::cin >> nomJ ;
 
 	int choixMenu = 0;
+	int choixTaille=0;
 	int choixDifficulte = 0;
+	int taille = 0;
 	do{
         std::cout << "" << std::endl;
-		std::cout << "VASY ON FAIT QUOI FRERE?" << std::endl;
-		std::cout << "1- PETITE PARTIE DES FAMILLLES OKLM" << std::endl;
-		std::cout << "2- ON DISCUTE UN COUP OU KOI?" << std::endl;
-		std::cout << "3- MAIS NON PARS PAS WESH ON COMMENCE A PEINE" << std::endl;
+		std::cout << "***** MENU *****" << std::endl;
+		std::cout << "1- Jouer" << std::endl;
+		std::cout << "2- Lire les règles" << std::endl;
+		std::cout << "3- Quitter le jeu" << std::endl;
 		std::cin >> choixMenu;
 
 		switch(choixMenu){
 		case 1:{
 		    do{
-                std::cout << "##### Niveau de difficulté #####" << std::endl;
-                std::cout << "1- Facile #boloss" << std::endl;
-                std::cout << "2- Moyen #boloss aussi" << std::endl;
-                std::cout << "3- Difficile #boloss refoulé" << std::endl;
-                std::cout << "4- Diabolique #tu vas perdre" << std::endl;
-                std::cout << "5- Retour au menu #pas de couilles" << std::endl;
+		    	do{
+		    		std::cout << "***** Quelle taille de Sudoku souhaites-tu? *****" << std::endl;
+		    		std::cout << "1- Classique : 9x9" << std::endl;
+		    		std::cout << "2- Grand : 16x16" << std::endl;
+		    		std::cin >> choixTaille;
+		    	}while((choixTaille!=1)&&(choixTaille!=2));
+
+		    	if(choixTaille==1)
+		    		taille=9;
+		    	else if(choixTaille==2)
+		    		taille=16;
+
+                std::cout << "***** Niveau de difficulté *****" << std::endl;
+                std::cout << "1- Facile" << std::endl;
+                std::cout << "2- Moyen" << std::endl;
+                std::cout << "3- Difficile" << std::endl;
+                std::cout << "4- Diabolique" << std::endl;
+                std::cout << "5- Retour au menu" << std::endl;
                 std::cin >> choixDifficulte;
 
                 switch(choixDifficulte){
                     case 1:{
                         std::cout << " " << std::endl;
-                        std::cout << "VASY CA PART, BON CHANCE" << std::endl;
+                        std::cout << "Bonne chance" << std::endl;
                         std::cout << " " << std::endl;
-                        Partie partie(nomJ);
+                        Partie partie(nomJ,taille);
                         partie.initialiser();
                         partie.permuterColonnes();
                         partie.permuterLignes();
-                        //partie.difficulteGrille(45);
+                        if(taille==9)
+                        	partie.difficulteGrille(45);  //45 cases en moins pour une 9x9 et 96 en 16x16
+                        else
+                        	partie.difficulteGrille(96);
                         partie.jouer();
+
                         break;
                     }
                     case 2:{
                         std::cout << " " << std::endl;
-                        std::cout << "VASY CA PART, BON CHANCE" << std::endl;
+                        std::cout << "Bonne chance" << std::endl;
                         std::cout << " " << std::endl;
-                        Partie partie(nomJ);
+                        Partie partie(nomJ,taille);
                         partie.initialiser();
                         partie.permuterColonnes();
                         partie.permuterLignes();
-                        partie.difficulteGrille(50);
+                        if(taille==9)
+                        	partie.difficulteGrille(50);  //50 cases en moins pour une 9x9 et 104 en 16x16
+                        else
+                        	partie.difficulteGrille(104);
                         partie.jouer();
                         break;
                     }
                     case 3:{
                         std::cout << " " << std::endl;
-                        std::cout << "VASY CA PART, BON CHANCE" << std::endl;
+                        std::cout << "Bonne chance" << std::endl;
                         std::cout << " " << std::endl;
-                        Partie partie(nomJ);
+                        Partie partie(nomJ,taille);
                         partie.initialiser();
                         partie.permuterColonnes();
                         partie.permuterLignes();
-                        partie.difficulteGrille(55);
+                        if(taille==9)
+                        	partie.difficulteGrille(55);  //55 cases en moins pour une 9x9 et 112 en 16x16
+                        else
+                            partie.difficulteGrille(112);
                         partie.jouer();
                         break;
                     }
                     case 4:{
                         std::cout << " " << std::endl;
-                        std::cout << "VASY CA PART, BON CHANCE" << std::endl;
+                        std::cout << "Bonne chance" << std::endl;
                         std::cout << " " << std::endl;
-                        Partie partie(nomJ);
+                        Partie partie(nomJ, taille);
                         partie.initialiser();
                         partie.permuterColonnes();
                         partie.permuterLignes();
-                        partie.difficulteGrille(60);
+                        std::cout << "Veuillez patienter, la grille est en cours de création." << std::endl;
+                        if(taille==9)
+                        	partie.difficulteGrille(60);  //60 cases en moins pour une 9x9 et 120 en 16x16
+                        else
+                        	partie.difficulteGrille(120);
                         partie.jouer();
                         break;
                     }
@@ -266,17 +294,19 @@ int main(){
             }
         case 2:{
 			//Trouver des trucs à mettre (les règles? ou alors choix niveau difficulté?)  /!\ version assistée et accéléree? (genre une sans question ligne, colonne et valeur)
-			std::cout << "BON CEST QUOI TON TERTER TOI BG?" << std::endl;
+			std::cout << "Les règles du sudoku sont très simples."<< std::endl;
+			std::cout << "Un sudoku classique contient neuf lignes et neuf colonnes, donc 81 cases au total." << std::endl;
+			std::cout << "Le but du jeu est de remplir ces cases avec des chiffres allant de 1 à 9 en veillant toujours à ce qu'un même chiffre"  << std::endl;
+			std::cout << "ne figure qu'une seule fois par colonne, une seule fois par ligne, et une seule fois par carré de neuf cases." << std::endl;
 			break;
 			}
 		case 3:{
-			std::cout << "BAH VASY SALAM" << std::endl;
+			std::cout << "A bientôt!" << std::endl;
 			exit(1);
 			break;
 			}
 		}
 	}while((choixMenu!=3)||(choixMenu==0));
 
-*/
 	return 0;
 }

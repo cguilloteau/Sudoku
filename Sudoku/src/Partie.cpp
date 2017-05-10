@@ -17,11 +17,14 @@
 #include <stddef.h>
 #include "List.h"
 
+
 Partie::Partie(string nomJ, int laTaille) {
 	finie = false;
 	nomJoueur = nomJ;
-	Grille grille(laTaille);
+	//Grille uneGrille = new Grille(laTaille);
+	grille.allocationTaille(laTaille);
 
+	//grille=Grille(laTaille);
 }
 
 
@@ -31,13 +34,20 @@ Partie::~Partie() {
 
 void Partie::initialiser(){
 int i,j;
-int tab[9][9]={{8, 4, 3, 7, 6, 5, 2, 1, 9},{5, 6, 7, 2, 1, 9, 3, 8, 4},{1, 2, 9, 4, 3, 8, 5, 7, 6},{2, 7, 4, 3, 8, 1, 6, 9, 5},{6, 8, 1, 5, 9, 2, 7, 4, 3},{3, 9, 5, 6, 7, 4, 1, 2, 8},{7, 1, 8, 9, 5, 3, 4, 6, 2},{4, 5, 6, 8, 2, 7, 9, 3, 1},{9, 3, 2, 1, 4, 6, 8, 5, 7}};
+int tabClassique[9][9]={{8, 4, 3, 7, 6, 5, 2, 1, 9},{5, 6, 7, 2, 1, 9, 3, 8, 4},{1, 2, 9, 4, 3, 8, 5, 7, 6},{2, 7, 4, 3, 8, 1, 6, 9, 5},{6, 8, 1, 5, 9, 2, 7, 4, 3},{3, 9, 5, 6, 7, 4, 1, 2, 8},{7, 1, 8, 9, 5, 3, 4, 6, 2},{4, 5, 6, 8, 2, 7, 9, 3, 1},{9, 3, 2, 1, 4, 6, 8, 5, 7}};
 //int tab[9][9]={{0, 4, 0, 0, 0, 5, 0, 0, 0},{0, 0, 0, 2, 1, 9, 3, 8, 4},{0, 0, 9, 0, 3, 8, 0, 7, 6},{0, 7, 0, 3, 0, 1, 0, 0, 0},{6, 0, 1, 0, 0, 0, 0, 0, 0},{0, 0, 0, 0, 7, 4,0, 2, 0},{0, 1,0, 9, 0,0 , 0, 6, 0},{0, 0, 0, 0, 0, 0, 0, 0, 0},{9, 0, 0, 0, 0, 6, 0, 0, 0}};
 //int tab[9][9]={{8, 4, 3, 7, 6, 5, 0, 1, 9},{5, 0, 7, 2, 1, 9, 3, 8, 4},{1, 2, 9, 4, 3, 8, 5, 7, 6},{2, 7, 4, 3, 8, 1, 6, 9, 5},{6, 8, 1, 5, 9, 2, 7, 4, 3},{3, 9, 5, 6, 7, 4, 1, 2, 8},{7, 1, 8, 9, 5, 3, 4, 6, 2},{4, 5, 6, 8, 2, 7, 9, 3, 1},{9, 3, 2, 1, 4, 6, 8, 5, 7}};
-
-for (i=0;i<9;i++){
+int tabGrand[16][16]={{8, 9, 6, 4, 15, 5, 11, 10, 3,14,1,13,12,7,2,16},{7,13,3,2,4,14,1,8,15,12,16,5,10,9,6,11},{14,10,1,12,7,16,3,2,6,11,4,9,5,8,13,15},{15,5,16,11,12,13,9,6,8,2,10,7,3,4,1,14},{11,6,2,5,3,4,10,15,1,16,12,8,9,13,14,7},{4,7,14,3,13,2,16,1,10,6,9,11,8,12,15,5},{9,12,13,16,6,8,5,11,2,15,7,14,1,10,4,3},{10,15,8,1,9,12,7,14,4,13,5,3,2,16,11,6},{13,8,15,9,14,1,12,5,11,7,2,4,16,6,3,10},{3,11,5,6,16,7,13,4,9,10,15,1,14,2,12,8},{2,16,10,14,11,15,6,3,5,8,13,12,4,1,7,9},{12,1,4,7,2,10,8,9,14,3,6,16,15,11,5,13},{6,2,7,13,10,9,14,16,12,1,3,15,11,5,8,4},{5,4,12,8,1,3,15,7,16,9,11,6,13,14,10,2},{1,14,9,15,5,11,2,13,7,4,8,10,6,3,16,12},{16,3,11,10,8,6,4,12,13,5,14,2,7,15,9,1}};
+if(grille.getTaille()==9)
+	for (i=0;i<9;i++){
 			for (j=0;j<9;j++){
-				grille.chgtValeur(i,j,tab[i][j]);
+				grille.chgtValeur(i,j,tabClassique[i][j]);
+			}
+	}
+if(grille.getTaille()==16)
+	for (i=0;i<16;i++){
+			for (j=0;j<16;j++){
+				grille.chgtValeur(i,j,tabGrand[i][j]);
 			}
 	}
 
@@ -318,35 +328,9 @@ bool Partie::regionOk (int k, int i, int j){
 	return retour;
 }
 
-//C'etait un test pour essayer de remplir la grille en partant de rien avec la nouvelle fonction de backtracking => Marche pas
-/*bool Partie::estValideInitial (Grille lagrille, LIST* position){
-    // Si la liste est vide (fin de liste)
-    if (position == NULL)
-        return true;
 
-    int i = position->i, j = position->j;
 
-    std::vector<int> listeValeurs;
-    for (int x=0; x<9; ++x)
-    	listeValeurs.push_back(x+1); // vecteur de 1 à 9 représentant les valeurs possibles
-        std::random_shuffle ( listeValeurs.begin(), listeValeurs.end() ); //melange les valeurs
-
-    for (unsigned x=0; x<listeValeurs.size(); x++){
-    	int k=listeValeurs.at(x);
-        if ( ligneOk(k,i) && colonneOk(k,j) && regionOk(k,i,j) )
-        {
-            lagrille.chgtValeur(i,j,k);
-
-            if ( estValide(lagrille,position->next) )
-                return true;
-        }
-    }
-    lagrille.chgtValeur(i,j,0);
-
-    return false;
-}*/
-
-bool Partie::estValide (Grille lagrille, LIST* position){
+bool Partie::estValide (Grille lagrille, LIST* position){ //permet de résoudre la grille
     // Si la liste est vide (fin de liste)
     if (position == NULL)
         return true;
@@ -519,14 +503,20 @@ void Partie::resolutionUneCase(){
 void Partie::jouer(){
 	int ligne=0, colonne, valeur, i,j, nbzeros, numeroCoup=0;
 	bool choixOk;
-	Grille grilleDeBase(grille.getTaille());
-	Grille grilleTemp(grille.getTaille());
-	Grille mesCoups[120](grille.getTaille()); //tableau de grille qui va recenser les coups joués pour revenir en arrière
-	Partie solutionFinale("solfinale",grille.getTaille());
+	Grille grilleDeBase;   //sert à retenir les valeurs initiales du sudoku pour ne pas les modifier
+	grilleDeBase.allocationTaille(grille.getTaille());
+
+	Grille mesCoups[120]; //tableau de grille qui va recenser les coups joués pour revenir en arrière
+	for(int c=0; c<120; c++)
+		mesCoups[c].allocationTaille(grille.getTaille());
+
+	Partie solutionFinale("solfinale",grille.getTaille());   //partie créée avec la meme grille initiale et résolue intégralement ensuite, afin de comparer la réponse correcte à celle du joueur
 	grilleDeBase.copier(grille);
+
 	solutionFinale.grille.copier(grille);
     solutionFinale.resolutionTotale();     //on a la grille finale correcte
-    mesCoups[0].copier(grilleDeBase);
+
+    mesCoups[0].copier(grilleDeBase);  //on initialise le tableau (qui retient les grilles au fur et à mesure) avec la grille initiale
 	while(finie == false){
 		grille.afficher();
 		std::cout << " " << std::endl;
@@ -576,7 +566,7 @@ void Partie::jouer(){
 		numeroCoup++;
 		mesCoups[numeroCoup].copier(grille);  //on recense avant le nouveau coup
 		grille.chgtValeur(ligne-1,colonne-1,valeur);
-		std::cout << "##################################################### " << std::endl;
+		std::cout << "***************************************************** " << std::endl;
         std::cout << "" << std::endl;
 
 		nbzeros = 0;           ////La on regarde si toute la grille est pleine pour mettre fin au jeu
@@ -592,28 +582,40 @@ void Partie::jouer(){
 		}
 	}
 
-	std::cout << "####################################################### " << std::endl;
+	bool different= false;
+
+	std::cout << "***************************************************** " << std::endl;
 	std::cout << "Vous avez rempli le sudoku, vérifions qu'il est correct" << std::endl;
 	bool correct=true;
 	for (i=0;i<grille.getTaille();i++){
         for (j=0;j<grille.getTaille();j++){
             if (grille.obtenirValeur(i,j)!=solutionFinale.grille.obtenirValeur(i,j)){
-                    correct=false;
+            	different= true;
+            	for (int l=0;l<grille.getTaille();l++){
+            		for (int m=0;m<grille.getTaille();m++){
+            			if (!( ligneOk(grille.obtenirValeur(l,m),l) || colonneOk(grille.obtenirValeur(l,m),m) || regionOk(grille.obtenirValeur(l,m),l,m))){
+            				correct=false;
+            			}
+            		}
+            	}
+            	/*if ( ligneOk(k,i) && colonneOk(k,j) && regionOk(k,i,j) )
+                    correct=false;*/
             }
-        }
+         }
     }
+	std::cout << "***************************************************** " << std::endl;
 	if(correct==true){
-        std::cout << "####################################################### " << std::endl;
         std::cout << "BRAVO " << nomJoueur << " c'est correct! " << std::endl;
+        if(different==true){
+        	std::cout << "Une autre solution est : " << std::endl;
+        	solutionFinale.grille.afficher();
+        }
 	}
 	else{
-        std::cout << "####################################################### " << std::endl;
         std::cout << "Désolé " << nomJoueur << " il y a une erreur, voici la bonne solution! " << std::endl;
         solutionFinale.grille.afficher();
 	}
-    std::cout << "####################################################### " << std::endl;
-    std::cout << "####################################################### " << std::endl;
-    std::cout << "####################################################### " << std::endl;
-    std::cout << "####################################################### " << std::endl;
-    std::cout << "####################################################### " << std::endl;
+    std::cout << "***************************************************** " << std::endl;
+    std::cout << "************************ FIN ************************ " << std::endl;
+    std::cout << "***************************************************** " << std::endl;
 }

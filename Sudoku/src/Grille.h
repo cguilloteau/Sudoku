@@ -5,6 +5,7 @@
  *      Author: taljijakli
  */
 
+
 #include "Case.h"
 
 #ifndef GRILLE_H_
@@ -12,8 +13,9 @@
 
 class Grille {
 public:
-	Grille(int laTaille);
+	Grille();
 	virtual ~Grille();
+	void allocationTaille(int laTaille);
 	int getTaille()const;
 	void setTaille(int uneTaille);
 	void chgtValeur(const int lig, const int col, const int val);
@@ -22,8 +24,12 @@ public:
 	void afficher();
 
 private:
-    Case *laGrille[9][9];
     int taille;
+    //Case *laGrille[9][9];
+    //Case *laGrille16[9][9];
+    //Case *laGrille[taille][taille];
+    Case **laGrille;
+    //std::vector< std::vector<Case> > laGrille;
 };
 
 #endif /* GRILLE_H_ */

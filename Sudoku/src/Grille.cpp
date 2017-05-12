@@ -39,7 +39,6 @@ void Grille::allocationTaille(int laTaille) {
 
 	for (i=0;i<taille;i++){
 		for (j=0;j<taille;j++){
-			//laGrille[i][j] = new Case();
 			laGrille[i][j].setColonne(j+1);
 			laGrille[i][j].setLigne(i+1);
 			laGrille[i][j].setRegion(i+1,j+1,taille);
@@ -53,7 +52,7 @@ int Grille::getTaille()const{
  return this->taille;
 }
 
-void Grille::setTaille(int uneTaille){
+void Grille::setTaille(int uneTaille){   //ne sert pas réellement depuis l'utilisation de double pointeur, on utilise maintenant allocationTaille.
 	this->taille=uneTaille;
 }
 

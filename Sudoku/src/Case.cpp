@@ -130,7 +130,4 @@ void Case::setValeur(int val){
 
 
 
-/*ostream& operator<< (ostream& unFlux, const Case& unCarre)
-		{
-		    return unFlux << unCarre.getValeur();
-		}*/
+

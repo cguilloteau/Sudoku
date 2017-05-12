@@ -1,9 +1,13 @@
-/*
- * List.h
- *
- *  Created on: 2 mai 2017
- *      Author: taljijakli
- */
+/** \class List
+* \brief Représente une liste de positions de cases
+* \author Zoé, Claire, Fabrice, Tarek
+* \version 1.0
+* \date Mai 2017
+* \bug Aucun bug
+* \warning Aucun warning
+*
+* Permet de générer une liste de cases vides, qui enregistre les coordonnées et le nombre de valeurs possibles de chaque case. On triera la liste en ordre croissant, puis on la passe en argument de notre fonction de backtracking.
+*/
 
 #ifndef LIST_H
 #define LIST_H

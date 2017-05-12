@@ -1,9 +1,13 @@
-/*
- * Grille.h
- *
- *  Created on: 27 avr. 2017
- *      Author: taljijakli
- */
+/** \class Case
+* \brief Représente une grille de Sudoku
+* \author Zoé, Claire, Fabrice, Tarek
+* \version 1.0
+* \date Mai 2017
+* \bug Aucun bug
+* \warning Aucun warning
+*
+* Permet de representer une grille de sudoku qui correspond à tableau dynamique en 2 dimensions.
+*/
 
 
 #include "Case.h"
@@ -25,11 +29,7 @@ public:
 
 private:
     int taille;
-    //Case *laGrille[9][9];
-    //Case *laGrille16[9][9];
-    //Case *laGrille[taille][taille];
     Case **laGrille;
-    //std::vector< std::vector<Case> > laGrille;
 };
 
 #endif /* GRILLE_H_ */

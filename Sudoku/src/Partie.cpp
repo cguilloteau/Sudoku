@@ -299,31 +299,6 @@ bool Partie::regionOk (int k, int i, int j){   //check  si la valeur n'est pas e
 	return retour;
 }
 
-
-bool Partie::ligneValide (int k, int i, int j){  //Check si la valeur n'est pas ailleurs dans la ligne (grille finie)
-	bool check = true ;
-    for (int c=0; c < grille.getTaille(); c++){
-    	if(c!=j){      //on vérifie toutes les colonnes de la ligne sauf celle que l'on vérifie
-    		if (grille.obtenirValeur(i,c) == k)
-    			check= false;
-    	}
-    }
-    return check;
-}
-
-bool Partie::colonneValide (int k, int i, int j){  //check  si la valeur n'est pas ailleurs dans la colonne (grille finie)
-	bool check = true;
-    for (int l=0; l < grille.getTaille(); l++){
-    	if(l!=i){		//on vérifie toutes les lignes de la colonne sauf celle que l'on vérifie
-    		if (grille.obtenirValeur(l,j) == k)
-            check = false;
-    	}
-    }
-    return check;
-}
-
-
-
 bool Partie::estValide (Grille lagrille, LIST* position){ //permet de résoudre la grille
     // Si la liste est vide (fin de liste)
     if (position == NULL)
@@ -472,7 +447,7 @@ void Partie::resolutionUneCase(){
 
     partieTemp.grille.copier(grille);   //on copie la grille du jeu dans la grille temporaire
     sudokuCorrect = partieTemp.resolutionTotale();
-    if(sudokuCorrect==true){
+    if(sudokuCorrect==true){    //On ne va donner de l'aide que si la grille actuelle est correcte. Pour ne pas pousser l'utilisateur dans une mauvaise direction.
         std::vector<int> listeCase;
         int nbCases = grille.getTaille()*grille.getTaille();
         for (int i=0; i<nbCases; ++i)
@@ -491,6 +466,32 @@ void Partie::resolutionUneCase(){
             }
         }
     }
+    else{
+        std::cout << "Vous avez fait une erreur, revenez en arrière." << std::endl;
+    }
+}
+
+
+bool Partie::ligneValide (int k, int i, int j){  //Check si la valeur n'est pas ailleurs dans la ligne (grille finie)
+	bool check = true ;
+    for (int c=0; c < grille.getTaille(); c++){
+    	if(c!=j){      //on vérifie toutes les colonnes de la ligne sauf celle que l'on vérifie
+    		if (grille.obtenirValeur(i,c) == k)
+    			check= false;
+    	}
+    }
+    return check;
+}
+
+bool Partie::colonneValide (int k, int i, int j){  //check  si la valeur n'est pas ailleurs dans la colonne (grille finie)
+	bool check = true;
+    for (int l=0; l < grille.getTaille(); l++){
+    	if(l!=i){		//on vérifie toutes les lignes de la colonne sauf celle que l'on vérifie
+    		if (grille.obtenirValeur(l,j) == k)
+            check = false;
+    	}
+    }
+    return check;
 }
 
 
@@ -505,12 +506,15 @@ void Partie::jouer(){
 		mesCoups[c].allocationTaille(grille.getTaille());
 
 	Partie solutionFinale("solfinale",grille.getTaille());   //partie créée avec la meme grille initiale et résolue intégralement ensuite, afin de comparer la réponse correcte à celle du joueur
-	grilleDeBase.copier(grille);
 
+	grilleDeBase.copier(grille);
 	solutionFinale.grille.copier(grille);
     solutionFinale.resolutionTotale();     //on a la grille finale correcte
 
     mesCoups[0].copier(grilleDeBase);  //on initialise le tableau (qui retient les grilles au fur et à mesure) avec la grille initiale
+
+	Partie testValide("testValide",grille.getTaille()); //permet de vérifier si la grille actuelle du joueur est correcte
+
 	while(finie == false){
 		grille.afficher();
 		std::cout << " " << std::endl;
@@ -518,7 +522,7 @@ void Partie::jouer(){
 		choixOk = false;
 		while(choixOk == false){
 			do{
-				std::cout << "Quelle ligne voulez-vous modifier? (0 pour obtenir de l'aide/21 pour revenir en arrière)"<< std::endl;
+				std::cout << "Quelle ligne voulez-vous modifier? (0 pour obtenir de l'aide/21 pour revenir en arrière/31 pour savoir si la grille est correcte)"<< std::endl;
 				std::cin >> ligne;
 				if(ligne==0){
 					numeroCoup++;
@@ -531,6 +535,29 @@ void Partie::jouer(){
 					grille.copier(mesCoups[numeroCoup]);
 					numeroCoup--;
                     grille.afficher();
+				}
+				if(ligne==31){
+                    bool valide=true;
+					testValide.grille.copier(grille);
+                    for (int i=0;i<grille.getTaille();i++){   //on check si aucune valeur n'est en double dans la même ligne ou colonne
+                        for (int j=0;j<grille.getTaille();j++){
+                            if(testValide.grille.obtenirValeur(i,j)>0){
+                                if (!( ligneValide(testValide.grille.obtenirValeur(i,j),i,j) || colonneValide(testValide.grille.obtenirValeur(i,j),i,j))){
+                                    valide=false;
+                                }
+                            }
+                        }
+                    }
+                    if(valide==true)
+                        valide = testValide.resolutionTotale();  //si aucune valeur n'est en double dans la même ligne ou colonne, on test si la grille est résolvable intégralement
+                    if(valide==true){
+                        std::cout << "La grille est correcte vous pouvez continuer" << std::endl;
+                        std::cout << "" << std::endl;
+                    }
+                    else if(valide==false){
+                        std::cout << "La grille est incorrecte, revenez en arrière" << std::endl;
+                        std::cout << "" << std::endl;
+                    }
 				}
 			}while((ligne<1)||(ligne>grille.getTaille()));
 

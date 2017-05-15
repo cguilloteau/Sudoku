@@ -1,20 +1,3 @@
-/** \class Case
-* \brief Représente une grille de Sudoku
-* \author Zoé, Claire, Fabrice, Tarek
-* \version 1.0
-* \date Mai 2017
-* \bug Aucun bug
-* \warning Aucun warning
-*
-* Permet de representer une grille de sudoku qui correspond à tableau dynamique en 2 dimensions.
-*/
-
-
-#include "Case.h"
-
-#ifndef GRILLE_H_
-#define GRILLE_H_
-
 class Grille {
 public:
     /** \fn Grille()
@@ -23,12 +6,6 @@ public:
 	 *
 	 */
 	Grille();
-
-	/** \fn virtual ~Grille()
-	 *
-	 *\brief Destructeur de Grille.
-	 *
-	 */
 	virtual ~Grille();
 
 
@@ -86,10 +63,3 @@ public:
     *\brief fonction permettant d'afficher la grille de manière esthétique sur le terminal
     */
 	void afficher();
-
-private:
-    int taille;
-    Case **laGrille;
-};
-
-#endif /* GRILLE_H_ */

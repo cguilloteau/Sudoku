@@ -1,133 +1,96 @@
-#include "Case.h"
+/** \class Case
+* \brief Représente une case de la grille
+* \author Zoé, Claire, Fabrice, Tarek
+* \version 1.0
+* \date Mai 2017
+* \bug Aucun bug
+* \warning Aucun warning
+*
+* Permet de representer une case de la grille en la décrivant selon sa ligne, colonne et région. Elle reçoit également une valeur entre 1 et 9 ou 1 et 16, selon la taille du sudoku choisie.
+*/
 
+#include <iostream>
+#include<string>
+
+#ifndef CASE_H
+#define CASE_H
 
 using namespace std;
 
-Case::Case()
+class Case
 {
-    colonne = 0;
-    ligne = 0;
-    region = 0;
-    valeur = 0;
-}
+    public:
+		/** \fn Case()
+		 *
+		 *\brief Constructeur permettant de créer une case, initialisée avec des 0 dans tous ses attributs.
+		 *
+		 */
+        Case();
+        /** \fn virtual ~Case()
+         *
+         *\brief Destructeur de case.
+         *
+         */
+        virtual ~Case();
+        /** \fn setColonne(const int ac)
+         *
+       	 *\brief Setteur permettant de modifier la valeur de l'attribut Colonne pour un objet Case.
+         *
+         */
+        void setColonne(const int ac);
+        /** \fn setLigne(const int dow)
+         *
+         *\brief Setteur permettant de modifier la valeur de l'attribut Ligne pour un objet Case.
+         *
+         */
+        void setLigne(const int dow);
+        /** \fn setRegion(int lig, int col, int tailleGrille)
+         *
+         *\brief Setteur permettant de modifier la valeur de l'attribut Région pour un objet Case. La région est calculée à partir de la ligne et la colonne de la case.
+         *
+         */
+        void setRegion(int lig, int col, int tailleGrille);
+        /** \fn setValeur(const int val)
+         *
+         *\brief Setteur permettant de modifier la valeur de l'attribut Valeur pour un objet Case.
+         *
+         */
+        void setValeur(const int val);
+        /** \fn int getColonne()const
+        *
+        *\brief Getteur permettant de récupérer la valeur de l'attribut Colonne pour un objet Case.
+        *
+        *\return La colonne de la Case
+        */
+        int getColonne()const;
+        /** \fn int getLigne()const
+         *
+         *\brief Getteur permettant de récupérer la valeur de l'attribut Ligne pour un objet Case.
+         *
+         *\return La ligne de la Case
+         */
+        int getLigne()const;
+        /** \fn int getRegion()const
+         *
+         *\brief Getteur permettant de récupérer la valeur de l'attribut Region pour un objet Case.
+         *
+         *\return La région de la Case
+         */
+        int getRegion()const;
+        /** \fn int getValeur()const
+         *
+         *\brief Getteur permettant de récupérer la valeur de l'attribut Valeur pour un objet Case.
+         *
+         *\return La valeur dans la Case
+         */
+        int getValeur()const;
 
-Case::~Case()
-{
-    //dtor
-}
+    protected:
+    private:
+        int colonne;
+        int ligne;
+        int region;
+        int valeur;
+};
 
-int Case::getColonne()const{
- return this->colonne;
-}
-
-int Case::getLigne()const{
- return this->ligne;
-}
-
-int Case::getRegion()const{
- return this->region;
-}
-
-int Case::getValeur()const{
- return this->valeur;
-}
-
-void Case::setColonne(int col){
- this->colonne=col;
-}
-
-void Case::setLigne(int lig){
- this->ligne=lig;
-}
-
-void Case::setRegion(int lig, int col, int tailleGrille){
-	int reg;
-	if (tailleGrille==9){
-		if ((1 <= col) && (col < 4) && (1 <= lig) && (lig < 4)) {
-	        reg = 1;
-	    }
-	    else if ((4 <= col) && (col < 7) && (1 <= lig) && (lig < 4)) {
-	        reg = 2;
-	    }
-	    else if ((7 <= col) && (col < 10) && (1 <= lig) && (lig < 4)) {
-	        reg = 3;
-	    }
-	    else if ((1 <= col) && (col < 4) && (4 <= lig) && (lig < 7)) {
-	        reg = 4;
-	    }
-	    else if ((4 <= col) && (col < 7) && (4 <= lig) && (lig < 7)) {
-	        reg = 5;
-	    }
-	    else if ((7 <= col) && (col < 10) && (4 <= lig) && (lig < 7)) {
-	        reg = 6;
-	    }
-	    else if ((1 <= col) && (col < 4) && (7 <= lig) && (lig < 10)) {
-	        reg = 7;
-	    }
-	    else if ((4 <= col) && (col < 7) && (7 <= lig) && (lig < 10)) {
-	        reg = 8;
-	    }
-	    else if ((7 <= col) && (col < 10) && (7 <= lig) && (lig < 10)) {
-	        reg = 9;
-	    }
-	}
-	else{
-		if ((1 <= col) && (col < 5) && (1 <= lig) && (lig < 5)) {
-	        reg = 1;
-		}
-		else if ((5 <= col) && (col < 9) && (1 <= lig) && (lig < 5)) {
-			reg = 2;
-		}
-	    else if ((9 <= col) && (col < 13) && (1 <= lig) && (lig < 5)) {
-	    	reg = 3;
-	    }
-	    else if ((13 <= col) && (col < 17) && (1 <= lig) && (lig < 5)) {
-	    	reg = 4;
-	    }
-	    else if ((1 <= col) && (col < 5) && (5 <= lig) && (lig < 9)) {
-			reg = 5;
-		}
-		else if ((5 <= col) && (col < 9) && (5 <= lig) && (lig < 9)) {
-			reg = 6;
-		}
-		else if ((9 <= col) && (col < 13) && (5 <= lig) && (lig < 9)) {
-			reg = 7;
-		}
-		else if ((13 <= col) && (col < 17) && (5 <= lig) && (lig < 9)) {
-			reg = 8;
-		}
-		else if ((1 <= col) && (col < 5) && (9 <= lig) && (lig < 13)) {
-			reg = 9;
-		}
-		else if ((5 <= col) && (col < 9) && (9 <= lig) && (lig < 13)) {
-			reg = 10;
-		}
-		else if ((9 <= col) && (col < 13) && (9 <= lig) && (lig < 13)) {
-			reg =11;
-		}
-		else if ((13 <= col) && (col < 17) && (9 <= lig) && (lig < 13)) {
-			reg = 12;
-		}
-		else if ((1 <= col) && (col < 5) && (13 <= lig) && (lig < 17)) {
-			reg = 13;
-		}
-		else if ((5 <= col) && (col < 9) && (13 <= lig) && (lig < 17)) {
-			reg = 14;
-		}
-		else if ((9 <= col) && (col < 13) && (13 <= lig) && (lig < 17)) {
-			reg =15;
-		}
-		else if ((13 <= col) && (col < 17) && (13 <= lig) && (lig < 17)) {
-			reg = 16;
-		}
-	}
- this->region=reg;
-}
-
-void Case::setValeur(int val){
- this->valeur=val;
-}
-
-
-
-
+#endif // Case_H
